@@ -27,4 +27,12 @@ docker-compose.override.yml
 .env.local
 .next
 tsconfig.tsbuildinfo
-.yarn
+
+# Yarn Ignore without Zero Install
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
