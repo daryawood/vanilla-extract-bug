@@ -1,0 +1,57 @@
+{
+  "name": "timescenery",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">= 14"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "not IE 9-11"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "test": "jest",
+    "build:all": "ultra --serial -r build",
+    "build:grapql": "cd ./projects/backend && nest build",
+    "build:frontend": "yarn --cwd ./projects/roadtravel build",
+    "build:admin": "ng build admin-panel --prod",
+    "build:widgets": "yarn --cwd ./projects/widgets build",
+    "run:widgets": "yarn --cwd ./projects/widgets start",
+    "clean-build": "rimraf ./public",
+    "extract-messages": "yarn --cwd ./projects/roadtravel extract-messages",
+    "download-translations": "crowdin download -b master",
+    "precommit": "lint-staged"
+  },
+  "workspaces": [
+    "projects/*"
+  ],
+  "jest": {
+    "moduleNameMapper": {
+      "^@td/(.*)": "<rootDir>/src/legacy/modules/td/$1",
+      "^@views/(.*)": "<rootDir>/src/legacy/views/$1",
+      "^@libs/(.*)": "<rootDir>/src/libs/$1",
+      "^@new/(.*)": "<rootDir>/src/new/$1",
+      "^@legacy/(.*)": "<rootDir>/src/legacy/$1",
+      "^@legacy/event-models/(.*)": "<rootDir>/src/legacy/modules/main/event-models/$1",
+      "^@legacy/event-models": "<rootDir>/src/legacy/modules/main/event-models/index",
+      "^@legacy/cars/(.*)": "<rootDir>/src/legacy/modules/cars/$1",
+      "^@legacy/scenarios/(.*)": "<rootDir>/src/legacy/modules/scenarios/$1",
+      "^@legacy/flights/(.*)": "<rootDir>/src/legacy/modules/search/flights/$1",
+      "^@legacy/venue/(.*)": "<rootDir>/src/legacy/modules/search/venue/$1",
+      "\\.(css|scss)$": "<rootDir>/src/tests/style-mock.ts"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,html}": [
+      "eslint --fix"
+    ],
+    "{translates.pot,messages.xlf}": [
+      "node ./ban-file.js"
+    ]
+  },
+  "packageManager": "yarn@3.0.2"
+}
